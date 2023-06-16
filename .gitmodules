@@ -4,3 +4,6 @@
 [submodule "benchmark"]
 	path = benchmark
 	url = https://github.com/google/benchmark.git
+[submodule "dnl-printfmt"]
+	path = dnl-printfmt
+	url = https://github.com/dnl0/dnl-printfmt

@@ -14,6 +14,7 @@ namespace std { class type_info; }
 # include "fmt/format.h"
 # include "fmt/compile.h"
 #endif
+# include "../dnl-printfmt/print.hh"
 #if __has_include(<boost/format.hpp>)
 #  include <boost/format.hpp>
 #  define HAVE_BOOST
@@ -160,6 +161,13 @@ void speedTest(const std::string& which)
             stbsp_sprintf(buf, "%0.10f:%04d:%+g:%s:%p:%c:%%\n",
                 1.234, 42, 3.13, "str", (void*)1000, (int)'X');
             fputs(buf, stdout);
+        }
+    }
+    else if(which == "dnl-printfmt")
+    {
+        for(long i = 0; i < maxIter; ++i) {
+            dnl::printfmt(std::cout, "{}:{}:{}:{}:{}:{}:\n",
+              1.234, 42, 3.13, "str", (void*)1000, 'X');
         }
     }
     else

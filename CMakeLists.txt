@@ -95,6 +95,8 @@ set(BUILD_SHARED_LIBS ON CACHE BOOL
 set(FMT_TEST TRUE CACHE BOOL "Enable fmt tests")
 add_subdirectory(fmt)
 
+add_subdirectory(dnl-printfmt)
+
 find_package(Boost)
 
 set(FOLLY_DIR HINTS /Users/viz/homebrew/Cellar/folly/2022.11.14.00)
@@ -111,8 +113,11 @@ if (PROFILER_LIB AND PROFILER_INCLUDE_DIR)
   set(HAVE_PROFILER TRUE)
 endif ()
 
+include_directories(dnl-printfmt)
+
 add_executable(tinyformat_speed_test src/tinyformat-test.cc)
 target_link_libraries(tinyformat_speed_test fmt ${EXTRA_LIBS})
+target_link_libraries(tinyformat_speed_test dnl-printfmt)
 if (HAVE_PROFILER)
   target_link_libraries(tinyformat_speed_test ${PROFILER_LIB})
   set(PROFILE_DEFS ";FMT_PROFILE")
@@ -169,6 +174,8 @@ else()
   COMMAND @time -p ./tinyformat_speed_test folly > /dev/null
   COMMAND @echo stb_sprintf timings:
   COMMAND @time -p ./tinyformat_speed_test stb_sprintf > /dev/null
+  COMMAND @echo dnl-printfmt timings:
+  COMMAND @time -p ./tinyformat_speed_test dnl-printfmt > /dev/null
 	DEPENDS tinyformat_speed_test)
 endif ()
 
